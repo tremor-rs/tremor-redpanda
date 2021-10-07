@@ -49,3 +49,14 @@ services:
     volumes:
       - ./etc/tremor_out:/etc/tremor:ro
       - ./var/log/out:/var/log:rw
+
+  metadata:
+    image: metadata-cli
+    depends_on:
+      - redpanda
+
+    environment:
+      - SLEEP=20
+      - RUST_BACKTRACE=1
+      - RUST_LOG=info
+
