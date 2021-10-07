@@ -31,7 +31,7 @@ services:
     depends_on:
       - redpanda
     environment:
-      - SLEEP=10
+      - SLEEP=5
       - RUST_BACKTRACE=1
       - RUST_LOG=debug
     volumes:
@@ -43,7 +43,7 @@ services:
     depends_on:
       - redpanda
     environment:
-      - SLEEP=0
+      - SLEEP=20
       - RUST_BACKTRACE=1
       - RUST_LOG=debug
     volumes:
