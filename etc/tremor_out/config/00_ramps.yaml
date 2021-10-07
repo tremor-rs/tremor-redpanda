@@ -1,0 +1,18 @@
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor server.
+#
+onramp:
+  - id: redpanda-in
+    type: kafka
+    codec: json
+    config:
+      brokers:
+        - redpanda:29092
+      topics:
+        - tremor
+      group_id: demo
+      retry_failed_events: true
+      rdkafka_options:
+        debug: broker,metadata,topic,consumer,cgrp,fetch
+        enable.partition.eof: true
+      poll_interval: 1

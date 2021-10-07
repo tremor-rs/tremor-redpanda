@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  redpanda:
+    command:
+    - redpanda
+    - start
+    - --smp
+    - '1'
+    - --reserve-memory
+    - 0M
+    - --overprovisioned
+    - --node-id
+    - '0'
+    - --kafka-addr
+    - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+    - --advertise-kafka-addr
+# Pretty sure we don't want `localhost` here
+    - PLAINTEXT://redpanda:29092,OUTSIDE://redpanda:9092
+    - --set
+# Use auto create topics for convenience
+    - 'auto_create_topics_enabled=true'
+    # NOTE: Please use the latest version here!
+    image: docker.vectorized.io/vectorized/redpanda:latest
+    ports:
+    - 9092:9092
+    - 29092:29092
+    container_name: redpanda
+
+  tremor_in:
+    image: tremorproject/tremor:edge
+    depends_on:
+      - redpanda
+    environment:
+      - SLEEP=10
+      - RUST_BACKTRACE=1
+      - RUST_LOG=debug
+    volumes:
+      - ./etc/tremor_in:/etc/tremor:ro
+      - ./var/log/in:/var/log/:rw
+
+  tremor_out:
+    image: tremorproject/tremor:latest
+    depends_on:
+      - redpanda
+    environment:
+      - SLEEP=0
+      - RUST_BACKTRACE=1
+      - RUST_LOG=debug
+    volumes:
+      - ./etc/tremor_out:/etc/tremor:ro
+      - ./var/log/out:/var/log:rw
