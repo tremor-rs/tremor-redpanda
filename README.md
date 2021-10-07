@@ -12,3 +12,9 @@ The scenario isn't all-encompassing but looks at the following specific use-case
 With this we can demonstrate the recovery and delivery guarantees using a WAL with Redpanda.
 
 We can start the example using `docker-compose up`. Then with `docker ps` we find the Kafka instance and can introduce an artificial error using `docker pause <container>`. We will see the messages stopping if we wait for a while we can reenable kafka with `docker unpause <container>` and will see the message flow resuming with a number of duplicated but no lost messages.
+
+## Verifying tremor is publishing to redpanda
+
+```bash
+$ docker-compose exec redpanda rpk topic consume tremor
+```
