@@ -15,4 +15,5 @@ onramp:
       rdkafka_options:
         debug: broker,metadata,topic,consumer,cgrp,fetch
         enable.partition.eof: true
+        security.protocol: SASL_SSL
       poll_interval: 1

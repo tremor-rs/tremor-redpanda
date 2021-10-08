@@ -13,7 +13,8 @@ mod example_utils;
 fn print_metadata(brokers: &str, topic: Option<&str>, timeout: Duration, fetch_offsets: bool) {
     let consumer: BaseConsumer = ClientConfig::new()
         .set("bootstrap.servers", brokers)
-        .set("debug", "topic,generic,msg,metadata,fetch")
+        .set("debug", "topic,generic,msg,metadata,fetch,security")
+        .set("security.protocol", "SASL_SSL")
         .create()
         .expect("Consumer creation failed");
 
