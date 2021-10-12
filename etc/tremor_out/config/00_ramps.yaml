@@ -13,7 +13,5 @@ onramp:
       group_id: demo
       retry_failed_events: true
       rdkafka_options:
-        debug: broker,metadata,topic,consumer,cgrp,fetch
-        enable.partition.eof: true
-        security.protocol: SASL_SSL
+        debug: broker,metadata,topic,consumer,cgrp,fetch,security
       poll_interval: 1
