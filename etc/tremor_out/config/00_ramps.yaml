@@ -7,7 +7,7 @@ onramp:
     codec: json
     config:
       brokers:
-        - redpanda:29092
+        - redpanda:9092
       topics:
         - tremor
       group_id: demo
