@@ -15,8 +15,6 @@ services:
       - redpanda:9092
       - --advertise-kafka-addr
       - redpanda:9092
-      - --set
-      - 'auto_create_topics_enabled=true'
     image: docker.vectorized.io/vectorized/redpanda:v21.9.5
     healthcheck:
       test: ["CMD", "curl", "http://localhost:9644/v1/status/ready"]
