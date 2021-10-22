@@ -1,3 +1,2 @@
-log
-var
+var/log/*
 docker/metadata-cli/metadata-cli/target/
