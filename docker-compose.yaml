@@ -39,7 +39,6 @@ services:
       redpanda:
         condition: service_healthy
     environment:
-      - SLEEP=5
       - RUST_BACKTRACE=1
       - RUST_LOG=debug
     volumes:
@@ -52,7 +51,6 @@ services:
       redpanda:
         condition: service_healthy
     environment:
-      - SLEEP=3
       - RUST_BACKTRACE=1
       - RUST_LOG=debug
     volumes:
