@@ -15,14 +15,29 @@ services:
       - redpanda:9092
       - --advertise-kafka-addr
       - redpanda:9092
-      - --set
-      - 'auto_create_topics_enabled=true'
     image: docker.vectorized.io/vectorized/redpanda:v21.9.5
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:9644/v1/status/ready"]
+      start_period: 0s
+      interval: 1s
+      retries: 30
+  topic-creator:
+    image: docker.vectorized.io/vectorized/redpanda:v21.9.5
+    command:
+      - topic
+      - --brokers
+      - redpanda:9092
+      - create
+      - tremor
+    depends_on:
+      redpanda:
+        condition: service_healthy
 
   tremor_in:
     image: tremorproject/tremor:edge
     depends_on:
-      - redpanda
+      redpanda:
+        condition: service_healthy
     environment:
       - SLEEP=5
       - RUST_BACKTRACE=1
@@ -34,7 +49,8 @@ services:
   tremor_out:
     image: tremorproject/tremor:edge
     depends_on:
-      - redpanda
+      redpanda:
+        condition: service_healthy
     environment:
       - SLEEP=3
       - RUST_BACKTRACE=1
